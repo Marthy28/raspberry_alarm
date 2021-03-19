@@ -1,0 +1,1 @@
+export GOOGLE_APPLICATION_CREDENTIALS=/home/pi/tp/BeAware-3d38a27421cd.json
