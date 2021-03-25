@@ -1,2 +1,3 @@
 google-cloud-firestore
 pi-rc522
+pygame

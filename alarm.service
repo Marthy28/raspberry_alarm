@@ -1,0 +1,13 @@
+[Unit]
+Description=Alarm BeAware
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/sh -c "export GOOGLE_APPLICATION_CREDENTIALS=/home/pi/tp/BeAware-592b5f264091.json && /usr/bin/python3 /home/pi/tp/alarm.py"
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target

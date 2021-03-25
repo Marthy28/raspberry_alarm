@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-
+# export GOOGLE_APPLICATION_CREDENTIALS=/home/pi/tp/BeAware-592b5f264091.json
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from multiprocessing import Process
@@ -10,6 +10,11 @@ import time
 import datetime
 import threading
 from google.cloud import firestore
+import pygame
+
+# Alarm Sound
+pygame.mixer.init()
+pygame.mixer.music.load("/home/pi/tp/alarm.wav")
 
 # Create an Event for notifying main thread.
 callback_done_firestore = threading.Event()
@@ -18,7 +23,6 @@ callback_done_reader_nfc = threading.Event()
 # Alarm Active
 isActive = False
 users = []
-
 
 # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -57,9 +61,10 @@ def alertBlink(alarm=23):
     global isActive
     while isActive:
         GPIO.output(alarm, GPIO.HIGH)
-        time.sleep(0.1)
+        pygame.mixer.music.play()
+        time.sleep(0.2)
         GPIO.output(alarm, GPIO.LOW)
-        time.sleep(0.1)
+        time.sleep(0.2)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # #
@@ -156,11 +161,11 @@ class CronTimer:
         print("début de l'attente")
         time.sleep(10)
         print("fin de l'attente")
-        alarm_ref.collection('history').document().set({
-            'date': str(datetime.datetime.now()),
-            'type': 'alert',
-        })
         if isActive and self._running:
+            alarm_ref.collection('history').document().set({
+                'date': str(datetime.datetime.now()),
+                'type': 'alert',
+            })
             alertBlink()
 
 
