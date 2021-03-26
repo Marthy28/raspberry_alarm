@@ -80,6 +80,9 @@ python3 alarm.py
 ## Schema Database 
 ![Schema Database](./img/capture_4.png)
 
+## Schema Raspberry Pi 
+![Schema Database](./img/capture_5.png)
+
 ## Systemctl / Start program lunch of the Raspberry Pi
 ```
 cp alarm.service /etc/systemd/system/alarm.service  
